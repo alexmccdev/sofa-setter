@@ -1,0 +1,96 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Session {
+  id           Int      @default(autoincrement()) @id
+  userId       Int      @map(name: "user_id")
+  expires      DateTime
+  sessionToken String   @unique @map(name: "session_token")
+  accessToken  String   @unique @map(name: "access_token")
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sessions")
+}
+
+model VerificationRequest {
+  id         Int       @default(autoincrement()) @id
+  identifier String
+  token      String    @unique
+  expires    DateTime
+  createdAt  DateTime  @default(now()) @map(name: "created_at")
+  updatedAt  DateTime  @default(now()) @map(name: "updated_at")
+
+  @@map(name: "verification_requests")
+}
+
+model User {
+  id            Int       @default(autoincrement()) @id
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map(name: "email_verified")
+  image         String?
+  gyms          Gym[]     @relation("users", references: [id])
+  gymAdmins     Gym[]     @relation("gymAdmins", references: [id])
+  problems      Problem[]
+  sends         Send[]
+  roles         Role[]    @relation(references: [id])
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+
+  @@map(name: "users")
+}
+
+model Role {
+  id            Int       @default(autoincrement()) @id
+  name          String
+  users         User[]    @relation(references: [id])
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+}
+
+model Gym {
+  id          Int       @default(autoincrement()) @id
+  name        String
+  location    String
+  image       String?
+  description String?
+  theme       String?
+  problems    Problem[]
+  users       User[]    @relation("users", references: [id])
+  gymAdmins   User[]    @relation("gymAdmins", references: [id])
+  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
+
+  @@map(name: "gyms")
+}
+
+model Problem {
+  id         Int       @default(autoincrement()) @id
+  name       String
+  grade      String
+  image      String
+  active     Boolean   @default(true)
+  gym        Gym       @relation(references: [id])
+  user       User      @relation(references: [id])
+  createdAt  DateTime  @default(now()) @map(name: "created_at")
+  updatedAt  DateTime  @default(now()) @map(name: "updated_at")
+
+  @@map(name: "problems")
+}
+
+model Send {
+  id         Int       @default(autoincrement()) @id
+  problem    Problem   @relation(references: [id])
+  user       User      @relation(references: [id])
+  createdAt  DateTime  @default(now()) @map(name: "created_at")
+  updatedAt  DateTime  @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sends")
+}

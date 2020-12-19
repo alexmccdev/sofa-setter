@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html,
+    body,
+    div#__next {
+        @apply h-full flex flex-col;
+    }
+    header {
+        @apply h-20 flex flex-none justify-between px-4 border-b items-center;
+    }
+
+    h1 {
+        @apply font-bold text-3xl;
+    }
+
+    h2 {
+        @apply font-bold text-xl;
+    }
+
+    h3 {
+        @apply font-bold text-base;
+    }
+
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    textarea,
+    select {
+        @apply p-2 border rounded-sm min-w-20 box-border;
+    }
+
+    select {
+        @apply appearance-none;
+    }
+
+    select > option {
+        @apply rounded-lg;
+    }
+
+    input[type='range'] {
+        @apply outline-none appearance-none border-none border-2;
+    }
+
+    input:not(:last-child) {
+        @apply mb-4;
+    }
+
+    label {
+        @apply font-semibold mb-1;
+    }
+}
+
+@layer components {
+    .card {
+        @apply border rounded-sm p-4 bg-white;
+    }
+
+    .btn {
+        @apply min-h-10 py-2 p-4 border border-black rounded-sm min-w-20;
+    }
+
+    .btn-sm {
+        @apply min-h-6 py-1 p-2 border border-black rounded-sm min-w-10 text-sm;
+    }
+
+    .btn-primary {
+        @apply bg-primary;
+    }
+
+    /* Tippy */
+    .tippy-box[data-theme~='default'] {
+        @apply bg-white text-black border border-black rounded-sm;
+    }
+
+    .tippy-content {
+        padding: 0px !important;
+    }
+}
+
+@layer utilities {
+}
