@@ -12,7 +12,7 @@ const GradeGraph: React.FC<GraphGraphProps> = (props) => {
     if (props.problems.length === 0) {
         return (
             <div className="flex items-center justify-center w-full h-full">
-                <h2 className="opacity-25">No problems have been set! You could be the first!</h2>
+                <h2 className="text-center opacity-25">No problems have been set! You could be the first!</h2>
             </div>
         )
     }

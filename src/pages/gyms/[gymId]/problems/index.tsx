@@ -33,9 +33,11 @@ const ProblemsPage: React.FC<ProblemsPageProps> = (props) => {
                 <h2 className="font-light">{gym.location}</h2>
             </div>
             <div className="flex flex-col">
-                {problems.map((p: Problem) => {
-                    return <ProblemCard problem={p} key={p.id} />
-                })}
+                {problems
+                    .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)) // initially sort by created date
+                    .map((p: Problem) => {
+                        return <ProblemCard problem={p} key={p.id} />
+                    })}
             </div>
         </>
     )
@@ -68,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const gymId = Number(context.query.gymId)
     const gym = await GetGym(gymId)
-    const problems = await GetProblems(gymId)
+    const problems = await GetProblems({ gymId })
 
     return {
         props: {

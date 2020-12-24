@@ -12,7 +12,6 @@ module.exports = {
                 warn: colors.yellow[500],
                 error: colors.red[500],
             },
-
             minWidth: (theme) => ({
                 ...theme('spacing'),
             }),

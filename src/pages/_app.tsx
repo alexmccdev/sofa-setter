@@ -14,6 +14,7 @@ import 'tippy.js/dist/svg-arrow.css'
 import '../styles/index.css' // Import this last
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+    return null
     return (
         <SWRConfig
             value={{

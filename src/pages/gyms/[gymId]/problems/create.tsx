@@ -76,8 +76,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             redirect: { permanent: false, destination: '/login' },
         }
     }
-
-    const gym = await GetGym(Number(context.query.gymId))
+    const gymId = Number(context.query.gymId)
+    const gym = await GetGym(gymId)
 
     return {
         props: {

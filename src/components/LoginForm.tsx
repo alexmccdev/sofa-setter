@@ -10,7 +10,7 @@ const LoginForm = () => {
     }
 
     return (
-        <form className="card" onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="mb-4">Login</h2>
             <label htmlFor="email" className="flex flex-col font-semibold">
                 Enter your email address to sign in or create an account
@@ -20,7 +20,7 @@ const LoginForm = () => {
                 className="w-full"
                 id="email"
                 name="email"
-                placeholder="chris.sharma@climbs.com"
+                placeholder="test@gmails.com"
                 ref={register({ required: true })}
             />
             {errors.email && <span className="text-error">Email is required</span>}

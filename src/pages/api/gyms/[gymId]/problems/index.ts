@@ -1,14 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { getSession } from 'next-auth/client'
+import { ToPrismaBoolean } from '@utils/index'
 
 const prisma = new PrismaClient()
 
-export const GET = async (gymId: number) => {
+export const GET = async (filter: Prisma.ProblemScalarWhereInput) => {
     try {
-        return await prisma.problem.findMany({ where: { gymId } })
-    } catch {
-        return { error: 'Could not get problems.' }
+        return await prisma.problem.findMany({
+            where: { gymId: Number(filter.gymId), active: ToPrismaBoolean(filter.active) },
+        })
+    } catch (err) {
+        return { error: err }
     }
 }
 
@@ -41,7 +44,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     switch (req.method) {
         case 'GET':
-            res.json(await GET(Number(req.query.gymId)))
+            res.json(await GET(req.query as Prisma.ProblemScalarWhereInput))
             break
         case 'POST':
             res.json(await POST(session.user.email, Number(req.query.gymId), req.body))

@@ -6,18 +6,23 @@ const prisma = new PrismaClient()
 
 export const GET = async (gymId: number, email: string) => {
     try {
-        const gym = await prisma.gym.findUnique({
+        const gym = await prisma.gym.findFirst({
             where: {
                 id: gymId,
+                gymAdmins: {
+                    some: {
+                        email,
+                    },
+                },
             },
-            select: {
-                gymAdmins: true,
+            include: {
+                gymAdmins: {
+                    where: { email },
+                },
             },
         })
 
-        const isAdmin = !!(gym.gymAdmins.filter((user) => user.email === email).length === 1)
-
-        return isAdmin
+        return !!gym
     } catch {
         return { error: 'Could not get admins' }
     }

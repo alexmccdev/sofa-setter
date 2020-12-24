@@ -20,7 +20,8 @@
             "@components/*": ["components/*"],
             "@hooks/*": ["hooks/*"],
             "@api/*": ["pages/api/*"],
-            "@contexts/*": ["contexts/*"]
+            "@contexts/*": ["contexts/*"],
+            "@utils/*": ["utils/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/api/auth/[...nextauth].js"],
